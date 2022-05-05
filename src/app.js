@@ -1,11 +1,13 @@
-import 'dotenv/config';
+import './database';
+
 import express from 'express';
 import globalMiddlewares from './middlewares/globalMiddlewares';
-import testRoutes from './routes/testRoutes';
+
+import userRoutes from './routes/userRoutes';
 
 const app = express();
 
 app.use(globalMiddlewares);
-app.use('/tests/', testRoutes);
+app.use('/users/', userRoutes);
 
 export default app;
