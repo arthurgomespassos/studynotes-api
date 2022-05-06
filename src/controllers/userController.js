@@ -1,25 +1,20 @@
 import User from '../models/User';
 
 const index = async (req, res) => {
-  try {
-    const users = await User.findAll({
-      order: [['id', 'DESC']],
-      attributes: { exclude: 'password_hash' },
-    });
-    return res.json(users);
-  } catch (e) {
-    return res.status(400).json({
-      errors: e.errors.map(({ message }) => message),
-    });
-  }
+  const users = await User.findAll({
+    order: [['id', 'DESC']],
+    attributes: { exclude: 'password_hash' },
+  });
+  return res.json(users);
 };
 
 const show = async (req, res) => {
   try {
-    const { id } = req.params;
+    console.log(req);
+    const id = req.userId;
     if (!id) {
       return res.status(400).json({
-        errors: ['id não enviado no parâmetro.'],
+        errors: ['id não recebido pelo token.'],
       });
     }
 
@@ -52,13 +47,13 @@ const store = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    if (!req.body.id) {
+    if (!req.userId) {
       return res.status(400).json({
-        errors: ['id não enviado no body.'],
+        errors: ['id não enviado pelo token.'],
       });
     }
 
-    const user = await User.findByPk(req.body.id);
+    const user = await User.findByPk(req.userId);
     if (!user) {
       return res.status(400).json({
         errors: ['Usuário não encontrado.'],
@@ -77,10 +72,10 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    const { id } = req.body;
+    const id = req.userId;
     if (!id) {
       return res.status(400).json({
-        errors: ['id não enviado no body.'],
+        errors: ['id não enviado pelo token.'],
       });
     }
 
