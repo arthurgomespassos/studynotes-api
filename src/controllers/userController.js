@@ -11,7 +11,7 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     console.log(req);
-    const id = req.userId;
+    const id = req.user_id;
     if (!id) {
       return res.status(400).json({
         errors: ['id não recebido pelo token.'],
@@ -36,8 +36,12 @@ const store = async (req, res) => {
       fields: ['name', 'email', 'password_hash'],
     });
 
-    const { id, name, email } = user;
-    return res.json({ id, name, email });
+    const {
+      id, name, email, created_at, updated_at,
+    } = user;
+    return res.json({
+      id, name, email, created_at, updated_at,
+    });
   } catch (e) {
     return res.status(400).json({
       errors: e.errors.map(({ message }) => message),
@@ -47,13 +51,13 @@ const store = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    if (!req.userId) {
+    if (!req.user_id) {
       return res.status(400).json({
         errors: ['id não enviado pelo token.'],
       });
     }
 
-    const user = await User.findByPk(req.userId);
+    const user = await User.findByPk(req.user_id);
     if (!user) {
       return res.status(400).json({
         errors: ['Usuário não encontrado.'],
@@ -61,8 +65,12 @@ const update = async (req, res) => {
     }
 
     const updatedUser = await user.update(req.body);
-    const { id, name, email } = updatedUser;
-    return res.json({ id, name, email });
+    const {
+      id, name, email, created_at, updated_at,
+    } = updatedUser;
+    return res.json({
+      id, name, email, created_at, updated_at,
+    });
   } catch (e) {
     return res.status(400).json({
       errors: e.errors.map(({ message }) => message),
@@ -72,7 +80,7 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    const id = req.userId;
+    const id = req.user_id;
     if (!id) {
       return res.status(400).json({
         errors: ['id não enviado pelo token.'],

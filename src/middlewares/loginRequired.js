@@ -23,8 +23,8 @@ const loginRequired = async (req, res, next) => {
       });
     }
 
-    req.userId = id;
-    req.userEmail = email;
+    req.user_id = id;
+    req.user_email = email;
 
     return next();
   } catch {
