@@ -6,7 +6,7 @@ const store = async (req, res) => {
 
   if (!email || !password) {
     return res.status(401).json({
-      errors: ['Credenciais inválidas'],
+      errors: ['Credenciais inválidas.'],
     });
   }
 
