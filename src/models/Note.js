@@ -17,7 +17,7 @@ export default class Note extends Model {
         type: Sequelize.STRING,
         defaultValue: '',
         len: {
-          msg: 'Descrição deve ter no máximo 255 caracteres',
+          msg: 'Descrição deve ter no máximo 255 caracteres.',
           args: [0, 255],
         },
       },
