@@ -19,7 +19,7 @@ const loginRequired = async (req, res, next) => {
     const user = await User.findOne({ where: { id, email } });
     if (!user) {
       return res.status(401).json({
-        errors: ['Usuário inválido'],
+        errors: ['Usuário inválido.'],
       });
     }
 
@@ -29,7 +29,7 @@ const loginRequired = async (req, res, next) => {
     return next();
   } catch {
     return res.status(401).json({
-      errors: ['Token expirado ou inválido'],
+      errors: ['Token expirado ou inválido.'],
     });
   }
 };
