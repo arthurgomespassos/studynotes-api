@@ -15,6 +15,9 @@
     "import/first": "off",
     "no-param-reassign": "off",
     "no-shadow": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "implicit-arrow-linebreak": "off",
+    "no-throw-literal": "warn",
+    "allowForLoopAfterthoughts": true
   }
 }

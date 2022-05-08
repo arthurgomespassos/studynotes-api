@@ -3,12 +3,6 @@ import Note from '../models/Note';
 const index = async (req, res) => {
   const { user_id } = req;
 
-  if (!user_id) {
-    return res.status(400).json({
-      errors: ['id não recebido pelo token.'],
-    });
-  }
-
   const notes = await Note.findAll({
     where: { user_id },
     order: [['updated_at', 'DESC']],
@@ -20,12 +14,6 @@ const index = async (req, res) => {
 const store = async (req, res) => {
   try {
     const { user_id } = req;
-
-    if (!user_id) {
-      return res.status(400).json({
-        errors: ['id não recebido pelo token.'],
-      });
-    }
 
     if (req.body.user_id) {
       return res.status(400).json({
@@ -50,12 +38,6 @@ const show = async (req, res) => {
   try {
     const { user_id } = req;
     const { note_id } = req.params;
-
-    if (!user_id) {
-      return res.status(400).json({
-        errors: ['id não recebido pelo token.'],
-      });
-    }
 
     if (!note_id) {
       return res.status(400).json({
@@ -82,12 +64,6 @@ const update = async (req, res) => {
   try {
     const { user_id } = req;
     const { note_id } = req.body;
-
-    if (!user_id) {
-      return res.status(400).json({
-        errors: ['id não recebido pelo token.'],
-      });
-    }
 
     if (!note_id) {
       return res.status(400).json({
@@ -124,12 +100,6 @@ const remove = async (req, res) => {
   try {
     const { user_id } = req;
     const { note_id } = req.body;
-
-    if (!user_id) {
-      return res.status(400).json({
-        errors: ['id não recebido pelo token.'],
-      });
-    }
 
     if (!note_id) {
       return res.status(400).json({

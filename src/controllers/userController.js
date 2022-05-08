@@ -10,13 +10,7 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
   try {
-    console.log(req);
     const id = req.user_id;
-    if (!id) {
-      return res.status(400).json({
-        errors: ['id não recebido pelo token.'],
-      });
-    }
 
     const user = await User.findByPk(
       id,
@@ -51,12 +45,6 @@ const store = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    if (!req.user_id) {
-      return res.status(400).json({
-        errors: ['id não enviado pelo token.'],
-      });
-    }
-
     const user = await User.findByPk(req.user_id);
     if (!user) {
       return res.status(400).json({
@@ -81,11 +69,6 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const id = req.user_id;
-    if (!id) {
-      return res.status(400).json({
-        errors: ['id não enviado pelo token.'],
-      });
-    }
 
     const user = await User.findByPk(id);
     if (!user) {

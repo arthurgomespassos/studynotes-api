@@ -5,7 +5,7 @@ import userController from '../controllers/userController';
 
 const router = new Router();
 
-// TODO uncomment for testing only
+// uncomment for testing only, not use this in production mode
 // router.get('/', userController.index);
 
 router.get('/', loginRequired, userController.show);
