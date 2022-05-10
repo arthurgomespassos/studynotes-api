@@ -3,7 +3,7 @@ import Part from '../models/Part';
 import User from '../models/User';
 
 const userHasThisNote = async (note_id, user_id) => {
-  const note = await Note.findOne({ where: { id: note_id, user_id } });
+  const note = await Note.findOne({ where: { id: note_id, user_id }, attributes: ['id'] });
   return !!note;
 };
 
@@ -44,4 +44,8 @@ const userHasThisPart = async (user_id, part_id) => {
   return userPartsIds.includes(+part_id);
 };
 
-export default { userHasThisNote, userHasThisPart };
+const throwErrorObj = (message) => {
+  throw ({ errors: [{ message }] });
+};
+
+export default { userHasThisNote, userHasThisPart, throwErrorObj };
