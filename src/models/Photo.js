@@ -13,7 +13,7 @@ export default class Photo extends Model {
         },
       },
       filename: {
-        type: Sequelize.STRING(80),
+        type: Sequelize.STRING,
         defaultValue: '',
         validate: {
           notEmpty: {

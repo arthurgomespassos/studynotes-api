@@ -1,4 +1,5 @@
 import Note from '../models/Note';
+import noteUtils from '../utils/noteUtils';
 
 const index = async (req, res) => {
   const { user_id } = req;
@@ -119,6 +120,8 @@ const remove = async (req, res) => {
         errors: ['Não existe nenhuma note com esse id.'],
       });
     }
+
+    await noteUtils.removeAllPhotosAndTheirFilesFromANote(note_id);
 
     await note.destroy();
     return res.json(null);

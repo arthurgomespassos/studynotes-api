@@ -1,6 +1,9 @@
+import fs from 'fs';
+
+import User from '../models/User';
 import Note from '../models/Note';
 import Part from '../models/Part';
-import User from '../models/User';
+import Photo from '../models/Photo';
 
 const userHasThisNote = async (note_id, user_id) => {
   const note = await Note.findOne({ where: { id: note_id, user_id }, attributes: ['id'] });
@@ -48,4 +51,35 @@ const throwErrorObj = (message) => {
   throw ({ errors: [{ message }] });
 };
 
-export default { userHasThisNote, userHasThisPart, throwErrorObj };
+const moveFiles = (oldPath, newPath, errorMsg) => {
+  fs.rename(oldPath, newPath, (err) => {
+    if (err) throwErrorObj(errorMsg);
+  });
+};
+
+const getAllUserPhotoFilenames = async (user_id) => {
+  const photos = await Photo.findAll({ where: { user_id }, attributes: ['filename'] });
+  const userHavePhotos = photos.length > 0 ? true : false;
+
+  if (!userHavePhotos) {
+    return [];
+  }
+
+  const filenames = photos.map(({ filename }) => filename);
+  return filenames;
+};
+
+const getTheIdsOfThePartsOfANote = async (note_id) => {
+  const parts = await Part.findAll({ where: { note_id }, attributes: ['id'] });
+  const ids = parts.map(({ id }) => id);
+  return ids;
+};
+
+export default {
+  userHasThisNote,
+  userHasThisPart,
+  throwErrorObj,
+  moveFiles,
+  getAllUserPhotoFilenames,
+  getTheIdsOfThePartsOfANote
+};

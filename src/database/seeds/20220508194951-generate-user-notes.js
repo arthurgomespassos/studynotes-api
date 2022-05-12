@@ -1,5 +1,5 @@
-const NUMBER_OF_USERS = process.env.SEED_NUMBER_OF_USERS;
-const NUMBER_OF_NOTES_PER_USER = process.env.SEED_NUMBER_OF_NOTES_PER_USER;
+const NUMBER_OF_USERS = +process.env.SEED_NUMBER_OF_USERS;
+const NUMBER_OF_NOTES_PER_USER = +process.env.SEED_NUMBER_OF_NOTES_PER_USER;
 
 const getActualNoteId = (i, j) => (i - 1) * NUMBER_OF_NOTES_PER_USER + j;
 

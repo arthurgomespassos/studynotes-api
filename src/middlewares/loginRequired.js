@@ -16,7 +16,7 @@ const loginRequired = async (req, res, next) => {
     const tokenData = jwt.verify(token, process.env.TOKEN_SECRET);
     const { id, email } = tokenData;
 
-    const user = await User.findOne({ where: { id, email } });
+    const user = await User.findOne({ where: { id, email }, attributes: ['id'] });
     if (!user) {
       return res.status(401).json({
         errors: ['Usuário inválido.'],

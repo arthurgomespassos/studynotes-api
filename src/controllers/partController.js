@@ -1,6 +1,7 @@
 import Part from '../models/Part';
 
 import utils from '../utils';
+import partUtils from '../utils/partUtils';
 
 const index = async (req, res) => {
   try {
@@ -116,6 +117,8 @@ const remove = async (req, res) => {
         errors: ['Não é possível deletar uma part que não é sua.'],
       });
     }
+
+    await partUtils.removeAPhotoAndFileFromAPart(id);
 
     await Part.destroy({ where: { id } });
     return res.json(null);

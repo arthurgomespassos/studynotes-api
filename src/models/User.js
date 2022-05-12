@@ -44,6 +44,14 @@ export default class User extends Model {
           },
         },
       },
+      is_banned: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0,
+      },
+      is_admin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0,
+      }
     }, {
       sequelize,
     });

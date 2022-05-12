@@ -1,10 +1,9 @@
-import { resolve } from 'path';
-import fs from 'fs';
 import multer from 'multer';
 import multerConfig from '../config/multerConfig';
 
 import utils from '../utils';
 import Photo from '../models/Photo';
+import photoUtils from '../utils/photoUtils';
 
 const upload = multer(multerConfig).single('picture');
 
@@ -77,22 +76,7 @@ const remove = async (req, res) => {
   }
 
   try {
-    const photoFilePath = resolve(__dirname, '..', '..', 'uploads', 'images', `${photo.filename}`);
-    const photoFileExists = fs.existsSync(photoFilePath);
-    if (!photoFileExists) {
-      return null;
-    }
-    if (photoFileExists) {
-      await fs.unlink(photoFilePath, (err) => {
-        if (err) {
-          const errorMessageWithoutFilePath = err.message.split(',')[0];
-          throw utils.throwErrorObj(errorMessageWithoutFilePath);
-        }
-      });
-    };
-
-    await photo.destroy();
-
+    await photoUtils.removeAPhotoAndFile(photo.id);
     return res.json(null);
   } catch (e) {
     return res.status(400).json({
@@ -101,7 +85,5 @@ const remove = async (req, res) => {
   }
 };
 
+
 export default { show, store, remove };
-
-
-

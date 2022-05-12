@@ -2,7 +2,7 @@ import multer from 'multer';
 import { resolve, extname } from 'path';
 import crypto from 'crypto';
 
-const generateRandomString = () => crypto.randomBytes(32).toString('hex');
+const generateRandomString = () => crypto.randomBytes(64).toString('hex');
 
 export default {
   fileFilter: (req, file, cb) => {

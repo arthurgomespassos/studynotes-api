@@ -9,6 +9,7 @@ import tokenRoutes from './routes/tokenRoutes';
 import noteRoutes from './routes/noteRoutes';
 import partRoutes from './routes/partRoutes';
 import photoRoutes from './routes/photoRoutes';
+import adminRoutes from './routes/adminRoutes';
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.use('/notes/', noteRoutes);
 app.use('/parts/', partRoutes);
 app.use('/photos/', photoRoutes);
 app.use('/images/', express.static(resolve(__dirname, '..', 'uploads', 'images')));
+app.use('/admins/', adminRoutes);
 
 export default app;
