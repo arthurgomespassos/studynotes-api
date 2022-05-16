@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 
 import Photo from '../models/Photo';
-import commons from './commonsUtils';
+import commons from './commonUtils';
 
 const removeAPhotoAndFile = async (photo_id) => {
   const photo = await Photo.findByPk(photo_id);

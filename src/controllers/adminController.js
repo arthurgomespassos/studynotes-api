@@ -1,7 +1,8 @@
 import { resolve } from 'path';
 
 import User from '../models/User';
-import utils from '../utils';
+import commonUtils from '../utils/commonUtils';
+import userUtils from '../utils/userUtils';
 
 const IMAGES_DIR_PATH = resolve(__dirname, '..', '..', 'uploads', 'images');
 const BAN_DIR_PATH = resolve(__dirname, '..', '..', 'uploads', 'imagesOfBannedUsers');
@@ -52,17 +53,18 @@ const ban = async (req, res) => {
   await user.update({ is_banned: 1 });
 
   try {
-    const photoFilenames = await utils.getAllUserPhotoFilenames(user_id);
+    const photoFilenames = await userUtils.getAllUserPhotoFilenames(user_id);
     const oldPhotoPaths = photoFilenames.map((filename) => resolve(IMAGES_DIR_PATH, filename));
     const newPhotoPaths = photoFilenames.map((filename) => resolve(BAN_DIR_PATH, filename));
 
     photoFilenames.forEach((filename, index) => {
-      utils.moveFiles(
+      commonUtils.moveFiles(
         oldPhotoPaths[index],
         newPhotoPaths[index],
         `Erro ao mover foto ${filename} do usuário ${user_id}.`);
     });
   } catch (e) {
+    console.log(e);
     return res.status(400).json({
       errors: e.errors.map(({ message }) => message),
     });
@@ -90,12 +92,12 @@ const unban = async (req, res) => {
   await user.update({ is_banned: 0 });
 
   try {
-    const photoFilenames = await utils.getAllUserPhotoFilenames(user_id);
+    const photoFilenames = await userUtils.getAllUserPhotoFilenames(user_id);
     const oldPhotoPaths = photoFilenames.map((filename) => resolve(BAN_DIR_PATH, filename));
     const newPhotoPaths = photoFilenames.map((filename) => resolve(IMAGES_DIR_PATH, filename));
 
     photoFilenames.forEach((filename, index) => {
-      utils.moveFiles(
+      commonUtils.moveFiles(
         oldPhotoPaths[index],
         newPhotoPaths[index],
         `Erro ao mover foto ${filename} do usuário ${user_id}.`);

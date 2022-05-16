@@ -59,12 +59,6 @@ const moveFiles = (oldPath, newPath, errorMsg) => {
 
 const getAllUserPhotoFilenames = async (user_id) => {
   const photos = await Photo.findAll({ where: { user_id }, attributes: ['filename'] });
-  const userHavePhotos = photos.length > 0 ? true : false;
-
-  if (!userHavePhotos) {
-    return [];
-  }
-
   const filenames = photos.map(({ filename }) => filename);
   return filenames;
 };

@@ -1,8 +1,8 @@
 import multer from 'multer';
 import multerConfig from '../config/multerConfig';
 
-import utils from '../utils';
 import Photo from '../models/Photo';
+import partUtils from '../utils/partUtils';
 import photoUtils from '../utils/photoUtils';
 
 const upload = multer(multerConfig).single('picture');
@@ -11,7 +11,7 @@ const show = async (req, res) => {
   const { user_id } = req;
   const { part_id } = req.params;
 
-  if (!await utils.userHasThisPart(user_id, part_id)) {
+  if (!await partUtils.userHasThisPart(user_id, part_id)) {
     return res.status(400).json({
       errors: ['Você não pode ver uma photo que não é sua.'],
     });
@@ -25,7 +25,7 @@ const store = async (req, res) => {
   const { user_id } = req;
   const { part_id } = req.params;
 
-  if (!await utils.userHasThisPart(user_id, part_id)) {
+  if (!await partUtils.userHasThisPart(user_id, part_id)) {
     return res.status(400).json({
       errors: ['Você não pode adicionar uma photo em uma part que não é sua.'],
     });
@@ -62,7 +62,7 @@ const remove = async (req, res) => {
   const { user_id } = req;
   const { part_id } = req.params;
 
-  if (!await utils.userHasThisPart(user_id, part_id)) {
+  if (!await partUtils.userHasThisPart(user_id, part_id)) {
     return res.status(400).json({
       errors: ['Você não pode remover uma foto de uma part que não é sua.'],
     });

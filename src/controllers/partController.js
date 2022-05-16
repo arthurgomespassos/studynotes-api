@@ -1,6 +1,6 @@
 import Part from '../models/Part';
 
-import utils from '../utils';
+import noteUtils from '../utils/noteUtils';
 import partUtils from '../utils/partUtils';
 
 const index = async (req, res) => {
@@ -14,7 +14,7 @@ const index = async (req, res) => {
       });
     }
 
-    if (!await utils.userHasThisNote(note_id, user_id)) {
+    if (!await noteUtils.userHasThisNote(note_id, user_id)) {
       return res.status(400).json({
         errors: ['note_id não pertence a este usuário ou é inválido.'],
       });
@@ -40,7 +40,7 @@ const store = async (req, res) => {
       });
     }
 
-    if (!await utils.userHasThisNote(note_id, user_id)) {
+    if (!await noteUtils.userHasThisNote(note_id, user_id)) {
       return res.status(400).json({
         errors: ['note_id não pertence a este usuário ou é inválido.'],
       });
@@ -75,7 +75,7 @@ const update = async (req, res) => {
       });
     }
 
-    if (!await utils.userHasThisNote(note_id, user_id)) {
+    if (!await noteUtils.userHasThisNote(note_id, user_id)) {
       return res.status(400).json({
         errors: ['note_id não pertence a este usuário ou é inválido.'],
       });
@@ -112,7 +112,7 @@ const remove = async (req, res) => {
       });
     }
 
-    if (!await utils.userHasThisPart(user_id, id)) {
+    if (!await partUtils.userHasThisPart(user_id, id)) {
       return res.status(400).json({
         errors: ['Não é possível deletar uma part que não é sua.'],
       });

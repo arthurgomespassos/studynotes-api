@@ -1,14 +1,12 @@
 import User from '../models/User';
 
-const excludeOptionsToNormalUser = ['created_at', 'updated_at', 'password_hash', 'is_admin', 'is_banned'];
-
 const show = async (req, res) => {
   try {
     const id = req.user_id;
 
     const user = await User.findByPk(
       id,
-      { attributes: { exclude: excludeOptionsToNormalUser } },
+      { attributes: ['id', 'name', 'email'] },
     );
     return res.json(user);
   } catch (e) {
